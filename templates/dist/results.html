@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .result-section {
+            margin-bottom: 20px;
+        }
+        .port-details {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scan Results</h1>
+    <div class="result-section">
+        <h2>Host Information</h2>
+        <p>Hostname: {{ scan_results['host info']['hostname'] }}</p>
+        <p>State: {{ scan_results['host info']['state'] }}</p>
+        <p>Scan Info: {{ scan_results['host info']['scan info'] }}</p>
+    </div>
+    <div class="result-section">
+        <h2>Open Ports</h2>
+        <ul>
+            {% for port in scan_results['open_ports'] %}
+                <li>{{ port }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="result-section">
+        <h2>Port Details</h2>
+        <ul>
+            {% for detail in scan_results['port_details'] %}
+                <li>
+                    <p>Port: {{ detail['port'] }}</p>
+                    <div class="port-details">
+                        <p>{{ detail['detail'] }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

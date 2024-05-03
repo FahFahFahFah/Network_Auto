@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .result-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nmap Scan Results</h1>
+    <div class="result-section">
+        <h2>Host Information</h2>
+        <p>Hostname: {{ nmscan_results['host info']['hostname'] }}</p>
+        <p>Host ip addr: {{ nmscan_results['host info']['hostip'] }}</p>
+        <p>State: {{ nmscan_results['host info']['state'] }}</p>
+        <p>Scan Info: {{ nmscan_results['host info']['scan info'] }}</p>
+    </div>
+    <div class="result-section">
+        <h2>Open Ports</h2>
+        <ul>
+            {% for port in nmscan_results['open_ports'] %}
+                {% if port == 80 or port == 443 %}
+                    <li><a href="/run_gobuster/{{ nmscan_results['host info']['hostip'] }}">{{ port }} : Webserver ==> Click to run Gobuster [Note: Gobuster scan may take 4 minutes to complete]</a></li>
+                {% else %}
+                    <li>{{ port }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="result-section">
+        <h2>Port Details</h2>
+        <ul>
+            {% for detail in nmscan_results['port_details'] %}
+                <li>
+                    <p>Port: {{ detail['port'] }}</p>
+                    <div class="port-details">
+                        <p>State: {{ detail['state'] }}</p>
+                        <p>Reason: {{ detail['reason'] }}</p>
+                        <p>Name: {{ detail['name'] }}</p>
+                        <p>Product: <a href="https://www.google.com/search?q={{ detail['product'] }}" target="_blank">{{ detail['product'] }}</a></p>
+                        <p>Version: <a href="https://www.google.com/search?q={{ detail['version'] }}" target="_blank">{{ detail['version'] }}</a></p>
+                        <p>Extrainfo: {{ detail['extrainfo'] }}</p>
+                        <p>Conf: {{ detail['conf'] }}</p>
+                        <p>CPE: {{ detail['cpe'] }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

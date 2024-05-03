@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nmap Scanner</title>
+</head>
+<body>
+  <h1>Nmap Scanner</h1>
+  {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+  {% endif %}
+  <form action="{{ url_for('scan') }}" method="POST">
+    <label for="ip_addr">Enter IP address to scan:</label>
+    <input type="text" id="ip_addr" name="ip_addr" required>
+    <button type="submit">Scan</button>
+    {% if not request.form.get("ip_addr") %}  <p style="color: red;">Please enter an IP address to scan.</p>
+    {% endif %}
+  </form>
+</body>
+</html>
